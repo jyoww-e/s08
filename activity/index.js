@@ -20,9 +20,9 @@ class Battle {
     this.pokemon2 = pokemon2;
   }
 
-  startBattle() {
+  doBattle() {
     console.log(
-      `Battle between ${this.pokemon1.name} and ${this.pokemon2.name} is starting...\n`
+      `\n\n\t\tBattle between ${this.pokemon1.name} and ${this.pokemon2.name} is starting\n\n`
     );
     while (this.pokemon1.hp > 0 && this.pokemon2.hp > 0) {
       if (Math.random() < 0.5) {
@@ -41,14 +41,66 @@ class Battle {
 
       if (this.pokemon1.hp <= 0) {
         console.log(`\n\n~~\n\n${this.pokemon2.name} has won!!!\n\n~~`);
-        break;
+        return this.pokemon2;
       }
       if (this.pokemon2.hp <= 0) {
         console.log(`\n\n~~\n\n${this.pokemon1.name} has won!!!\n\n~~`);
-        break;
+        return this.pokemon1;
       }
     }
   }
+}
+
+class Tournament {
+  constructor(trainers) {
+    this.trainers = trainers;
+    this.pairings = [];
+    this.battle;
+  }
+
+  getTrainers() {
+    console.log(this.trainers);
+  }
+
+  Pair() {
+    let arrLen = this.trainers.length;
+    for (let i = 0; i < arrLen / 2; i++) {
+      let arr = [this.trainers[i], this.trainers[arrLen - i - 1]];
+      this.pairings.push(arr);
+    }
+  }
+
+  getPairs() {
+    console.log(this.pairings);
+  }
+
+  startTournament() {
+    console.log(`\t\t~~ TOURNAMENT IS STARTING ~~`);
+    for (let trainer of this.pairings) {
+      for (let i in trainer[1].pokemons) {
+        let rand1 = Math.floor(Math.random() * trainer[0].pokemons.length);
+        let rand2 = Math.floor(Math.random() * trainer[0].pokemons.length);
+        let randomPokemon1 = trainer[0].pokemons[rand1];
+        let randomPokemon2 = trainer[1].pokemons[rand2];
+        this.battle = new Battle(randomPokemon1, randomPokemon2);
+        this.battle.doBattle();
+      }
+
+      // this.battle = new Battle(trainer[0].selectPokemon(0), trainer[1].selectPokemon(0));
+    }
+  }
+
+  // startTournament() {
+  //   for (let i = 0; i < this.pairings.length; i++) {
+  //     for (let j = 0; j < this.pairings[0].length; j++) {
+  //       console.log(
+  //         this.pairings[i][j].pokemons[
+  //           Math.floor(Math.random() * this.pairings[i][j].pokemons.length)
+  //         ]
+  //       );
+  //     }
+  //   }
+  // }
 }
 
 class Pokemon {
@@ -62,7 +114,7 @@ class Pokemon {
   }
 
   attack(opponent) {
-    console.log(`${this.name} attacks ${opponent.name}!!`);
+    console.log(`\n\t${this.name} attacks ${opponent.name}!!`);
     let damage = this.level * 3;
     this.calculateDamage(opponent, damage);
   }
@@ -99,7 +151,8 @@ class Pokemon {
   }
 
   powerUp(opponent) {
-    this.initialHP += this.initialHP + opponent.initialHP * 0.5;
+    this.initialHP += opponent.initialHP * 0.5;
+    this.hp += opponent.initialHP * 0.5;
     console.log(`${this.name} has powered up! +${opponent.initialHP * 0.2} HP`);
   }
 
@@ -122,7 +175,7 @@ class FirePokemon extends Pokemon {
   attack(opponent) {
     let attacks = ["Flaming tail whip", "Flamethrower", "Fire punch"];
     let rand = Math.floor(Math.random() * attacks.length);
-    console.log(`${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
@@ -152,7 +205,7 @@ class ElectricPokemon extends Pokemon {
     ];
     let rand = Math.floor(Math.random() * attacks.length);
 
-    console.log(`${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
@@ -177,7 +230,7 @@ class WaterPokemon extends Pokemon {
     let attacks = ["Aqua Jet", "Hydro Pump", "Jet Punch", "Water Spout"];
     let rand = Math.floor(Math.random() * attacks.length);
 
-    console.log(`${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
@@ -202,7 +255,7 @@ class GroundPokemon extends Pokemon {
     let attacks = ["Earth Quake", "Mud Bomb", "Sandstorm", "Scorching Sand"];
     let rand = Math.floor(Math.random() * attacks.length);
 
-    console.log(`${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
@@ -219,14 +272,43 @@ class GroundPokemon extends Pokemon {
   }
 }
 
-// const blastoise = new WaterPokemon("Blastoise", 10, 1000);
-// const charmeleon = new FirePokemon("Charmeleon", 10, 1000);
+const blastoise = new WaterPokemon("Blastoise", 10, 1000);
+const charmeleon = new FirePokemon("Charmeleon", 10, 1000);
 // const firefox = new FirePokemon("Firefox", 20, 2000);
-// const battle1 = new Battle(blastoise, charmeleon);
+const battle1 = new Battle(blastoise, charmeleon);
 
-// battle1.startBattle();
+// const winner = battle1.doBattle();
+// console.log(winner);
 
-const joeshua = new Trainer("Joeshua");
-joeshua.addPokemon(new FirePokemon("Charizard", 15, 1500));
-joeshua.addPokemon(new WaterPokemon("Blastoise", 15, 2000));
-joeshua.viewPokedex();
+const joe = new Trainer("Joe");
+joe.addPokemon(new FirePokemon("Charizard", 15, 1500));
+joe.addPokemon(new WaterPokemon("Blastoise", 15, 2000));
+joe.addPokemon(new GroundPokemon("Diglet", 5, 800));
+joe.addPokemon(new ElectricPokemon("ElectaBuzz", 20, 2000));
+// joe.addPokemon(new ElectricPokemon("Zapdos", 30, 10000));
+
+const jun = new Trainer("Jun");
+jun.addPokemon(new FirePokemon("Charmeleon", 15, 1500));
+jun.addPokemon(new WaterPokemon("Wartortoise", 15, 2000));
+jun.addPokemon(new GroundPokemon("Dugtrio", 5, 800));
+jun.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
+
+const jed = new Trainer("Jed");
+jed.addPokemon(new FirePokemon("Lorenz", 15, 1500));
+jed.addPokemon(new WaterPokemon("Alvarez", 15, 2000));
+jed.addPokemon(new GroundPokemon("Jeddi", 5, 800));
+jed.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
+
+const ken = new Trainer("Ken");
+ken.addPokemon(new FirePokemon("Ken", 15, 1500));
+ken.addPokemon(new WaterPokemon("Shiro", 15, 2000));
+ken.addPokemon(new GroundPokemon("Marowak", 5, 800));
+ken.addPokemon(new ElectricPokemon("Nonan", 20, 2000));
+
+// joeshua.viewPokedex();
+
+const tourna1 = new Tournament([jun, joe, ken, jed]);
+// tourna1.getTrainers();
+tourna1.Pair();
+// tourna1.getPairs();
+tourna1.startTournament();
