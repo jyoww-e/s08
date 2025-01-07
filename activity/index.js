@@ -72,12 +72,14 @@ class Tournament {
 
   Pair() {
     let arrLen = this.trainers.length;
-    this.pairings = []; // Reset pairings before creating new ones
+    this.pairings = [];
 
     for (let i = 0; i < arrLen / 2; i++) {
-      let arr = [this.trainers[i], this.trainers[arrLen - i - 1]]; // Pair trainers
-      this.pairings.push(arr); // Add the pair to the pairings list
+      let arr = [this.trainers[i], this.trainers[arrLen - i - 1]];
+      this.pairings.push(arr);
     }
+
+    console.log(this.trainers, this.pairings);
   }
 
   startTournament() {
@@ -96,46 +98,51 @@ class Tournament {
         let loser;
 
         if (trainerPair[0] && trainerPair[1]) {
-          console.log(
-            `%c\n\t\tMatch between ${trainerPair[0].name} and ${trainerPair[1].name}\n`,
-            "color: limegreen; font-weight: bold; font-size: 14px"
-          );
-
-          // check if both trainers have Pokemon left
-          if (trainerPair[0].pokemons.length === 0) {
-            winner = trainerPair[1];
-            loser = trainerPair[0];
-            console.log(
-              `${trainerPair[0].name} has no Pokemon left and loses the match.`
-            );
-          } else if (trainerPair[1].pokemons.length === 0) {
+          if (trainerPair[0].name == trainerPair[1].name) {
             winner = trainerPair[0];
-            loser = trainerPair[1];
-            console.log(
-              `${trainerPair[1].name} has no Pokemon left and loses the match.`
-            );
           } else {
-            // select one pokemon randomly
-            let rand1 = Math.floor(
-              Math.random() * trainerPair[0].pokemons.length
+            console.log(
+              `%c\n\t\tMatch between ${trainerPair[0].name} and ${trainerPair[1].name}\n`,
+              "color: limegreen; font-weight: bold; font-size: 14px"
             );
-            let rand2 = Math.floor(
-              Math.random() * trainerPair[1].pokemons.length
-            );
-            let randomPokemon1 = trainerPair[0].pokemons[rand1];
-            let randomPokemon2 = trainerPair[1].pokemons[rand2];
 
-            // trainerPair[0].pokemons.splice(rand1, 1);
-            // trainerPair[1].pokemons.splice(rand2, 1);
-
-            this.battle = new Battle(randomPokemon1, randomPokemon2);
-            winner = this.battle.doBattle();
-            if (winner.name == randomPokemon1.name) {
-              winner = trainerPair[0];
-            } else {
+            // check if both trainers have Pokemon left
+            if (trainerPair[0].pokemons.length === 0) {
               winner = trainerPair[1];
+              loser = trainerPair[0];
+              console.log(
+                `${trainerPair[0].name} has no Pokemon left and loses the match.`
+              );
+            } else if (trainerPair[1].pokemons.length === 0) {
+              winner = trainerPair[0];
+              loser = trainerPair[1];
+              console.log(
+                `${trainerPair[1].name} has no Pokemon left and loses the match.`
+              );
+            } else {
+              // select one pokemon randomly
+              let rand1 = Math.floor(
+                Math.random() * trainerPair[0].pokemons.length
+              );
+              let rand2 = Math.floor(
+                Math.random() * trainerPair[1].pokemons.length
+              );
+              let randomPokemon1 = trainerPair[0].pokemons[rand1];
+              let randomPokemon2 = trainerPair[1].pokemons[rand2];
+
+              // trainerPair[0].pokemons.splice(rand1, 1);
+              // trainerPair[1].pokemons.splice(rand2, 1);
+
+              this.battle = new Battle(randomPokemon1, randomPokemon2);
+              winner = this.battle.doBattle();
+              if (winner.name == randomPokemon1.name) {
+                winner = trainerPair[0];
+              } else {
+                winner = trainerPair[1];
+              }
+              loser =
+                winner === trainerPair[0] ? trainerPair[1] : trainerPair[0];
             }
-            loser = winner === trainerPair[0] ? trainerPair[1] : trainerPair[0];
           }
         } else {
           winner = trainerPair[0] ? trainerPair[0] : trainerPair[1];
@@ -432,9 +439,15 @@ ken.addPokemon(new WaterPokemon("Shiro", 15, 2000));
 ken.addPokemon(new GroundPokemon("Marowak", 5, 800));
 ken.addPokemon(new ElectricPokemon("Nonan", 20, 2000));
 
+const test = new Trainer("test");
+test.addPokemon(new FirePokemon("ss", 15, 1500));
+test.addPokemon(new WaterPokemon("Shssiro", 15, 2000));
+test.addPokemon(new GroundPokemon("ss", 5, 800));
+test.addPokemon(new ElectricPokemon("Nondsdsan", 20, 2000));
+
 // joeshua.viewPokedex();
 
 // number of tournament participants must be divisible by 2
-const tourna1 = new Tournament([joe, jun, jed, ken]);
+const tourna1 = new Tournament([joe, jun, jed, ken, test]);
 
 tourna1.startTournament();
