@@ -165,7 +165,7 @@ class Tournament {
     }
 
     console.log(
-      `%c\n~~ The winner of the tournament is: ${this.trainers[0].name} ~~`,
+      `%c\n~~ The winner of the tournament is: Trainer ${this.trainers[0].name} ~~`,
       "color: #FFD700; font-size: 16px; font-weight:bold;"
     );
     // return this.trainers[0];
