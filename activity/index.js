@@ -22,14 +22,15 @@ class Battle {
 
   doBattle() {
     console.log(
-      `\n\n\t\tBattle between ${this.pokemon1.name} and ${this.pokemon2.name} is starting\n\n`
+      `%c\n\t\t${this.pokemon1.name} V.S. ${this.pokemon2.name}\n\n`,
+      "color: lime"
     );
     while (this.pokemon1.hp > 0 && this.pokemon2.hp > 0) {
-      if (Math.random() < 0.5) {
-        this.pokemon1.attack(this.pokemon2);
-      } else {
-        this.pokemon2.attack(this.pokemon1);
-      }
+      // if (Math.random() < 0.5) {
+      this.pokemon1.attack(this.pokemon2);
+      // } else {
+      this.pokemon2.attack(this.pokemon1);
+      // }
       //ACTIVATES HEAL OF POKEMON ON 25% CHANCE
       if (Math.random() < 0.25) {
         this.pokemon1.heal();
@@ -40,11 +41,17 @@ class Battle {
       }
 
       if (this.pokemon1.hp <= 0) {
-        console.log(`\n\n~~\n\n${this.pokemon2.name} has won!!!\n\n~~`);
+        console.log(
+          `%c\n\n~~ ${this.pokemon2.name} has won the battle! ~~`,
+          "color: lime"
+        );
         return this.pokemon2;
       }
       if (this.pokemon2.hp <= 0) {
-        console.log(`\n\n~~\n\n${this.pokemon1.name} has won!!!\n\n~~`);
+        console.log(
+          `%c\n\n~~ ${this.pokemon1.name} has won the battle! ~~`,
+          "color: lime"
+        );
         return this.pokemon1;
       }
     }
@@ -64,43 +71,94 @@ class Tournament {
 
   Pair() {
     let arrLen = this.trainers.length;
-    for (let i = 0; i < arrLen / 2; i++) {
-      let arr = [this.trainers[i], this.trainers[arrLen - i - 1]];
-      this.pairings.push(arr);
-    }
-  }
+    this.pairings = []; // Reset pairings before creating new ones
 
-  getPairs() {
-    console.log(this.pairings);
+    for (let i = 0; i < arrLen / 2; i++) {
+      let arr = [this.trainers[i], this.trainers[arrLen - i - 1]]; // Pair trainers
+      this.pairings.push(arr); // Add the pair to the pairings list
+    }
   }
 
   startTournament() {
-    console.log(`\t\t~~ TOURNAMENT IS STARTING ~~`);
-    for (let trainer of this.pairings) {
-      for (let i in trainer[1].pokemons) {
-        let rand1 = Math.floor(Math.random() * trainer[0].pokemons.length);
-        let rand2 = Math.floor(Math.random() * trainer[0].pokemons.length);
-        let randomPokemon1 = trainer[0].pokemons[rand1];
-        let randomPokemon2 = trainer[1].pokemons[rand2];
-        this.battle = new Battle(randomPokemon1, randomPokemon2);
-        this.battle.doBattle();
+    console.log(`%c\t\t~~ TOURNAMENT IS STARTING ~~`, "color: #FFD700");
+
+    while (this.trainers.length > 1) {
+      this.Pair();
+      let winners = [];
+      // console.log(this.trainers);
+
+      for (let trainerPair of this.pairings) {
+        let winner;
+        let loser;
+
+        if (trainerPair[0] && trainerPair[1]) {
+          console.log(
+            `%c\n\t\tMatch between ${trainerPair[0].name} and ${trainerPair[1].name}\n`,
+            "color: limegreen"
+          );
+
+          // check if both trainers have Pokemon left
+          if (trainerPair[0].pokemons.length === 0) {
+            winner = trainerPair[1];
+            loser = trainerPair[0];
+            console.log(
+              `${trainerPair[0].name} has no Pokemon left and loses the match.`
+            );
+          } else if (trainerPair[1].pokemons.length === 0) {
+            winner = trainerPair[0];
+            loser = trainerPair[1];
+            console.log(
+              `${trainerPair[1].name} has no Pokemon left and loses the match.`
+            );
+          } else {
+            // select one pokemon randomly
+            let rand1 = Math.floor(
+              Math.random() * trainerPair[0].pokemons.length
+            );
+            let rand2 = Math.floor(
+              Math.random() * trainerPair[1].pokemons.length
+            );
+            let randomPokemon1 = trainerPair[0].pokemons[rand1];
+            let randomPokemon2 = trainerPair[1].pokemons[rand2];
+
+            // trainerPair[0].pokemons.splice(rand1, 1);
+            // trainerPair[1].pokemons.splice(rand2, 1);
+
+            this.battle = new Battle(randomPokemon1, randomPokemon2);
+            winner = this.battle.doBattle();
+            if (winner.name == randomPokemon1.name) {
+              winner = trainerPair[0];
+            } else {
+              winner = trainerPair[1];
+            }
+            loser = winner === trainerPair[0] ? trainerPair[1] : trainerPair[0];
+          }
+        } else {
+          winner = trainerPair[0] ? trainerPair[0] : trainerPair[1];
+          loser = winner === trainerPair[0] ? trainerPair[1] : trainerPair[0];
+          console.log(
+            `One trainer is missing. ${winner.name} automatically advances.`
+          );
+        }
+
+        // const loserIndex = this.trainers.indexOf(loser);
+        // if (loserIndex !== -1) {
+        //   this.trainers.splice(loserIndex, 1);
+        // }
+
+        winners.push(winner);
+        // console.log(winners, "ASDSADS");
       }
-
-      // this.battle = new Battle(trainer[0].selectPokemon(0), trainer[1].selectPokemon(0));
+      // console.log(winners);
+      this.trainers = winners;
     }
-  }
 
-  // startTournament() {
-  //   for (let i = 0; i < this.pairings.length; i++) {
-  //     for (let j = 0; j < this.pairings[0].length; j++) {
-  //       console.log(
-  //         this.pairings[i][j].pokemons[
-  //           Math.floor(Math.random() * this.pairings[i][j].pokemons.length)
-  //         ]
-  //       );
-  //     }
-  //   }
-  // }
+    console.log(
+      `%c\n\n~~ The winner of the tournament is: ${this.trainers[0].name} ~~`,
+      "color: #FFD700"
+    );
+    // return this.trainers[0];
+  }
 }
 
 class Pokemon {
@@ -114,55 +172,64 @@ class Pokemon {
   }
 
   attack(opponent) {
-    console.log(`\n\t${this.name} attacks ${opponent.name}!!`);
+    console.log(`\n\t\t~~${this.name}'s attack~~`);
+    console.log(`\t${this.name} attacks ${opponent.name}!!`);
     let damage = this.level * 3;
     this.calculateDamage(opponent, damage);
   }
   calculateDamage(opponent, damage) {
     // WHEN DAMAGE IS CRITICAL MULTIPLY DAMAGE BY 2
     if (Math.random() < 0.3) {
-      damage *= 2;
-      console.log(`(${damage}) CRITICAL DAMAGE!! `);
+      damage *= 8;
+      console.log(`%c\t(${damage}) CRITICAL DAMAGE!! `, "color: red");
     }
     // WHEN DEFENSE IS ACTIVATED REDUCE DAMAGE TAKEN
     if (opponent.defense === true) {
       damage -= opponent.level * 2;
-      console.log(`${opponent.name} reduced damage due to defense`);
+      console.log(
+        `%c\t${opponent.name} reduced damage due to defense`,
+        "color:rgb(238, 238, 83)"
+      );
     }
     //WHEN POKEMON DODGES DAMAGE IS REDUCED TO 0 (15% chance of dodging)
     if (Math.random() < 0.15) {
       damage = 0;
-      console.log(`${opponent.name} has dodged!`);
+      console.log(`%c\t${opponent.name} has DODGED!`, "color: limegreen");
     }
 
     this.receivedDamage(opponent, damage);
   }
   receivedDamage(opponent, damage) {
     opponent.hp -= damage;
-    console.log(`${opponent.name} takes -${damage}HP damage...`);
+    console.log(`\t${opponent.name} takes -${damage}HP damage...`);
 
     //if opponent dies
     if (opponent.hp <= 0) {
-      console.log(`${opponent.name} has fainted...`);
+      console.log(`\t${opponent.name} has fainted...`);
       this.powerUp(opponent);
     } else {
-      console.log(`${opponent.name} has ${opponent.hp}HP left...`);
+      console.log(`\t${opponent.name} has ${opponent.hp}HP left...`);
     }
   }
 
   powerUp(opponent) {
     this.initialHP += opponent.initialHP * 0.5;
     this.hp += opponent.initialHP * 0.5;
-    console.log(`${this.name} has powered up! +${opponent.initialHP * 0.2} HP`);
+    console.log(
+      `\t${this.name} has powered up! +${opponent.initialHP * 0.2} HP`
+    );
   }
 
   heal() {
     const heal = 10;
-    console.log(`${this.name} is using potion +10 HP...`);
+    console.log(`%c\t${this.name} is using potion +10 HP...`, "color: #f8f87c");
     this.hp += heal;
-    console.log(`${this.name} now has ${this.hp} HP...`);
+    console.log(`\t${this.name} now has ${this.hp} HP...`);
     if (Math.random() < 0.4) {
-      console.log(`${this.name} has activated DEFENSE!!`);
+      console.log(
+        `%c\t${this.name} has activated DEFENSE!!`,
+        "color:rgb(238, 238, 83)"
+      );
       this.defense = true;
     }
   }
@@ -173,20 +240,27 @@ class FirePokemon extends Pokemon {
     super(name, "Fire", level, hp);
   }
   attack(opponent) {
+    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: red");
     let attacks = ["Flaming tail whip", "Flamethrower", "Fire punch"];
     let rand = Math.floor(Math.random() * attacks.length);
-    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(
+      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+      "color: red"
+    );
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
   }
   heal() {
     const heal = 15;
-    console.log(`${this.name} is using FLASH FIRE!!`);
+    console.log(`%c\t${this.name} is using FLASH FIRE!!`, "color: #f8f87c");
     this.hp += heal;
-    console.log(`${this.name} now has ${this.hp} HP (+${heal})...`);
+    console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
     if (Math.random() < 0.4) {
-      console.log(`${this.name} has activated DEFENSE!!`);
+      console.log(
+        `%c\t${this.name} has activated DEFENSE!!`,
+        "color:rgb(238, 238, 83)"
+      );
       this.defense = true;
     }
   }
@@ -204,19 +278,25 @@ class ElectricPokemon extends Pokemon {
       "Bolt Strike",
     ];
     let rand = Math.floor(Math.random() * attacks.length);
-
-    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: yellow");
+    console.log(
+      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+      "color: yellow"
+    );
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
   }
   heal() {
     const heal = 15;
-    console.log(`${this.name} is using HEAL PULSE!!`);
+    console.log(`%c\t${this.name} is using HEAL PULSE!!`, "color: #f8f87c");
     this.hp += heal;
-    console.log(`${this.name} now has ${this.hp} HP (+${heal})...`);
+    console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
     if (Math.random() < 0.4) {
-      console.log(`${this.name} has activated DEFENSE!!`);
+      console.log(
+        `%c\t${this.name} has activated DEFENSE!!`,
+        "color:rgb(238, 238, 83)"
+      );
       this.defense = true;
     }
   }
@@ -229,19 +309,25 @@ class WaterPokemon extends Pokemon {
   attack(opponent) {
     let attacks = ["Aqua Jet", "Hydro Pump", "Jet Punch", "Water Spout"];
     let rand = Math.floor(Math.random() * attacks.length);
-
-    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: lightblue");
+    console.log(
+      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+      "color: lightblue"
+    );
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
   }
   heal() {
     const heal = 15;
-    console.log(`${this.name} is using LIFE DEW!!`);
+    console.log(`%c\t${this.name} is using LIFE DEW!!`, "color: #f8f87c");
     this.hp += heal;
-    console.log(`${this.name} now has ${this.hp} HP (+${heal})...`);
+    console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
     if (Math.random() < 0.4) {
-      console.log(`${this.name} has activated DEFENSE!!`);
+      console.log(
+        `%c\t${this.name} has activated DEFENSE!!`,
+        "color:rgb(238, 238, 83)"
+      );
       this.defense = true;
     }
   }
@@ -254,19 +340,25 @@ class GroundPokemon extends Pokemon {
   attack(opponent) {
     let attacks = ["Earth Quake", "Mud Bomb", "Sandstorm", "Scorching Sand"];
     let rand = Math.floor(Math.random() * attacks.length);
-
-    console.log(`\n\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
+    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: #b5651d");
+    console.log(
+      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+      "color: #b5651d"
+    );
     let damage = this.level * 5;
 
     this.calculateDamage(opponent, damage);
   }
   heal() {
     const heal = 15;
-    console.log(`${this.name} is using SHORE UP!!`);
+    console.log(`%c\t${this.name} is using SHORE UP!!`, "color: #f8f87c");
     this.hp += heal;
-    console.log(`${this.name} now has ${this.hp} HP (+${heal})...`);
+    console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
     if (Math.random() < 0.4) {
-      console.log(`${this.name} has activated DEFENSE!!`);
+      console.log(
+        `%c\t${this.name} has activated DEFENSE!!`,
+        "color:rgb(238, 238, 83)"
+      );
       this.defense = true;
     }
   }
@@ -277,8 +369,7 @@ const charmeleon = new FirePokemon("Charmeleon", 10, 1000);
 // const firefox = new FirePokemon("Firefox", 20, 2000);
 const battle1 = new Battle(blastoise, charmeleon);
 
-// const winner = battle1.doBattle();
-// console.log(winner);
+// const winner = battl1111111
 
 const joe = new Trainer("Joe");
 joe.addPokemon(new FirePokemon("Charizard", 15, 1500));
@@ -307,8 +398,7 @@ ken.addPokemon(new ElectricPokemon("Nonan", 20, 2000));
 
 // joeshua.viewPokedex();
 
-const tourna1 = new Tournament([jun, joe, ken, jed]);
-// tourna1.getTrainers();
-tourna1.Pair();
-// tourna1.getPairs();
+// number of tournament participants must be divisible by 2
+const tourna1 = new Tournament([joe, jun, jed, ken]);
+
 tourna1.startTournament();
