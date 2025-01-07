@@ -130,6 +130,15 @@ class Tournament {
               let randomPokemon1 = trainerPair[0].pokemons[rand1];
               let randomPokemon2 = trainerPair[1].pokemons[rand2];
 
+              console.log(
+                `%c\t${trainerPair[0].name} has chosen ${randomPokemon1.name}!`,
+                "color: cyan"
+              );
+              console.log(
+                `%c\t${trainerPair[1].name} has chosen ${randomPokemon2.name}!`,
+                "color: cyan"
+              );
+
               // trainerPair[0].pokemons.splice(rand1, 1);
               // trainerPair[1].pokemons.splice(rand2, 1);
 
