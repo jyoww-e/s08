@@ -79,7 +79,7 @@ class Tournament {
       this.pairings.push(arr);
     }
 
-    console.log(this.trainers, this.pairings);
+    // console.log(this.trainers, this.pairings);
   }
 
   startTournament() {
