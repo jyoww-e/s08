@@ -23,7 +23,7 @@ class Battle {
   doBattle(trainers) {
     console.log(
       `\t\t%c${this.pokemon1.name} V.S. ${this.pokemon2.name}`,
-      "color: white; font-size: 14px; font-weight: bold; background-color:lime; border-radius: 4px; padding: 10px"
+      "color: white; font-size: 14px; font-weight: bold; background-color:lime; border-radius: 4px; padding: 4px"
     );
     while (this.pokemon1.hp > 0 && this.pokemon2.hp > 0) {
       // if (Math.random() < 0.5) {
@@ -103,7 +103,7 @@ class Tournament {
           } else {
             console.log(
               `\t%cMatch between ${trainerPair[0].name} and ${trainerPair[1].name}`,
-              "color: white; font-weight: bold; font-size: 14px; background-color: limegreen; padding: 4px; border-radius: 4px;"
+              "color: white; font-weight: bold; font-size: 14px; background-color: limegreen; padding: 8px; border-radius: 4px;"
             );
 
             // check if both trainers have Pokemon left
@@ -198,8 +198,8 @@ class Pokemon {
       return;
     } else {
       console.log(
-        `\n\t\t%c${this.name}'s attack`,
-        "color: black; background-color: white; padding: 2px; border-radius: 4px"
+        `\n\t%c${this.name}'s attack`,
+        "color: black; background-color: white; padding: 2px; border-radius: 4px; font-weight: bold"
       );
       console.log(`\t${this.name} attacks ${opponent.name}!!`);
       let damage = this.level * 3;
@@ -283,8 +283,8 @@ class FirePokemon extends Pokemon {
       return;
     } else {
       console.log(
-        `\n\t\t%c${this.name}'s attack`,
-        "color: white; background-color: red; padding: 2px; border-radius: 4px"
+        `\n\t%c${this.name}'s attack`,
+        "color: white; background-color: red; padding: 2px; border-radius: 4px; font-weight: bold"
       );
       let attacks = ["Flaming tail whip", "Flamethrower", "Fire punch"];
       let rand = Math.floor(Math.random() * attacks.length);
@@ -330,8 +330,8 @@ class ElectricPokemon extends Pokemon {
       ];
       let rand = Math.floor(Math.random() * attacks.length);
       console.log(
-        `\n\t\t%c${this.name}'s attack`,
-        "color: black; background-color: yellow; padding: 2px; border-radius: 4px"
+        `\n\t%c${this.name}'s attack`,
+        "color: black; background-color: yellow; padding: 2px; border-radius: 4px; font-weight: bold"
       );
       console.log(
         `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
@@ -370,7 +370,7 @@ class WaterPokemon extends Pokemon {
       let attacks = ["Aqua Jet", "Hydro Pump", "Jet Punch", "Water Spout"];
       let rand = Math.floor(Math.random() * attacks.length);
       console.log(
-        `\n\t\t%c${this.name}'s attack`,
+        `\n\t%c${this.name}'s attack`,
         "color: black; background-color: lightblue; padding: 2px; border-radius: 4px"
       );
       console.log(
@@ -410,8 +410,8 @@ class GroundPokemon extends Pokemon {
       let attacks = ["Earth Quake", "Mud Bomb", "Sandstorm", "Scorching Sand"];
       let rand = Math.floor(Math.random() * attacks.length);
       console.log(
-        `\n\t\t%c${this.name}'s attack`,
-        "color: white; background-color: #b5651d; padding: 2px; border-radius: 4px"
+        `\n\t%c${this.name}'s attack`,
+        "color: white; background-color: #b5651d; padding: 2px; border-radius: 4px; font-weight: bold"
       );
       console.log(`\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`);
       let damage = this.level * 5;
@@ -454,28 +454,30 @@ jun.addPokemon(new FirePokemon("Charmeleon", 15, 1500));
 jun.addPokemon(new WaterPokemon("Wartortoise", 15, 2000));
 jun.addPokemon(new GroundPokemon("Dugtrio", 5, 800));
 jun.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
+jun.addPokemon(new GroundPokemon("Sudowoodo", 20, 2000));
 
 const jed = new Trainer("Jed");
-jed.addPokemon(new FirePokemon("Lorenz", 15, 1500));
-jed.addPokemon(new WaterPokemon("Alvarez", 15, 2000));
-jed.addPokemon(new GroundPokemon("Jeddi", 5, 800));
+jed.addPokemon(new FirePokemon("Blaziken", 15, 1500));
+jed.addPokemon(new WaterPokemon("Rotom", 15, 2000));
+jed.addPokemon(new GroundPokemon("Tyranitar", 5, 800));
 jed.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
+jed.addPokemon(new GroundPokemon("Groudon", 20, 2000));
 
 const ken = new Trainer("Ken");
-ken.addPokemon(new FirePokemon("Ken", 15, 1500));
-ken.addPokemon(new WaterPokemon("Shiro", 15, 2000));
+ken.addPokemon(new FirePokemon("Arcanine", 15, 1500));
+ken.addPokemon(new WaterPokemon("Tentacool", 15, 2000));
 ken.addPokemon(new GroundPokemon("Marowak", 5, 800));
-ken.addPokemon(new ElectricPokemon("Nonan", 20, 2000));
+ken.addPokemon(new ElectricPokemon("Jolteon", 20, 2000));
 
-const test = new Trainer("test");
-test.addPokemon(new FirePokemon("ss", 15, 1500));
-test.addPokemon(new WaterPokemon("Shssiro", 15, 2000));
-test.addPokemon(new GroundPokemon("ss", 5, 800));
-test.addPokemon(new ElectricPokemon("Nondsdsan", 20, 2000));
+const jonas = new Trainer("Jonas");
+jonas.addPokemon(new FirePokemon("Typhlosion", 15, 1500));
+jonas.addPokemon(new WaterPokemon("Magikarp", 15, 2000));
+jonas.addPokemon(new GroundPokemon("Kabutops", 5, 800));
+jonas.addPokemon(new ElectricPokemon("Pachirisu", 20, 2000));
 
 // joeshua.viewPokedex();
 
 // number of tournament participants must be divisible by 2
-const tourna1 = new Tournament([joe, jun, jed, ken, test]);
+const tourna1 = new Tournament([joe, jun, jed, ken, jonas]);
 
 tourna1.startTournament();
