@@ -419,7 +419,7 @@ joe.addPokemon(new FirePokemon("Charizard", 15, 1500));
 joe.addPokemon(new WaterPokemon("Blastoise", 15, 2000));
 joe.addPokemon(new GroundPokemon("Diglet", 5, 800));
 joe.addPokemon(new ElectricPokemon("ElectaBuzz", 20, 2000));
-// joe.addPokemon(new ElectricPokemon("Zapdos", 30, 10000));
+joe.addPokemon(new ElectricPokemon("Zapdos", 30, 10000));
 
 const jun = new Trainer("Jun");
 jun.addPokemon(new FirePokemon("Charmeleon", 15, 1500));
