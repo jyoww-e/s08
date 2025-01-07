@@ -22,8 +22,8 @@ class Battle {
 
   doBattle() {
     console.log(
-      `%c\n\t\t${this.pokemon1.name} V.S. ${this.pokemon2.name}\n\n`,
-      "color: lime"
+      `%c\t\t${this.pokemon1.name} V.S. ${this.pokemon2.name}`,
+      "color: lime; font-size: 14px; font-weight: bold"
     );
     while (this.pokemon1.hp > 0 && this.pokemon2.hp > 0) {
       // if (Math.random() < 0.5) {
@@ -31,14 +31,6 @@ class Battle {
       // } else {
       this.pokemon2.attack(this.pokemon1);
       // }
-      //ACTIVATES HEAL OF POKEMON ON 25% CHANCE
-      if (Math.random() < 0.25) {
-        this.pokemon1.heal();
-      }
-      //ACTIVATES HEAL OF POKEMON ON 25% CHANCE
-      if (Math.random() < 0.25) {
-        this.pokemon2.heal();
-      }
 
       if (this.pokemon1.hp <= 0) {
         console.log(
@@ -53,6 +45,15 @@ class Battle {
           "color: lime"
         );
         return this.pokemon1;
+      }
+
+      //ACTIVATES HEAL OF POKEMON ON 25% CHANCE
+      if (Math.random() < 0.25) {
+        this.pokemon1.heal();
+      }
+      //ACTIVATES HEAL OF POKEMON ON 25% CHANCE
+      if (Math.random() < 0.25) {
+        this.pokemon2.heal();
       }
     }
   }
@@ -80,7 +81,10 @@ class Tournament {
   }
 
   startTournament() {
-    console.log(`%c\t\t~~ TOURNAMENT IS STARTING ~~`, "color: #FFD700");
+    console.log(
+      `%c\t~~ TOURNAMENT IS STARTING ~~`,
+      "color: #FFD700; font-weight:bold; font-size:18px"
+    );
 
     while (this.trainers.length > 1) {
       this.Pair();
@@ -94,7 +98,7 @@ class Tournament {
         if (trainerPair[0] && trainerPair[1]) {
           console.log(
             `%c\n\t\tMatch between ${trainerPair[0].name} and ${trainerPair[1].name}\n`,
-            "color: limegreen"
+            "color: limegreen; font-weight: bold; font-size: 14px"
           );
 
           // check if both trainers have Pokemon left
@@ -154,8 +158,8 @@ class Tournament {
     }
 
     console.log(
-      `%c\n\n~~ The winner of the tournament is: ${this.trainers[0].name} ~~`,
-      "color: #FFD700"
+      `%c\n~~ The winner of the tournament is: ${this.trainers[0].name} ~~`,
+      "color: #FFD700; font-size: 16px; font-weight:bold;"
     );
     // return this.trainers[0];
   }
@@ -169,13 +173,19 @@ class Pokemon {
     this.hp = hp;
     this.initialHP = hp;
     this.defense = false;
+    this.hasFainted = false;
   }
 
   attack(opponent) {
-    console.log(`\n\t\t~~${this.name}'s attack~~`);
-    console.log(`\t${this.name} attacks ${opponent.name}!!`);
-    let damage = this.level * 3;
-    this.calculateDamage(opponent, damage);
+    //prevent attacking when dead
+    if (opponent.hasFainted === true) {
+      return;
+    } else {
+      console.log(`\n\t\t~~${this.name}'s attack~~`);
+      console.log(`\t${this.name} attacks ${opponent.name}!!`);
+      let damage = this.level * 3;
+      this.calculateDamage(opponent, damage);
+    }
   }
   calculateDamage(opponent, damage) {
     // WHEN DAMAGE IS CRITICAL MULTIPLY DAMAGE BY 2
@@ -207,6 +217,7 @@ class Pokemon {
     if (opponent.hp <= 0) {
       console.log(`\t${opponent.name} has fainted...`);
       this.powerUp(opponent);
+      this.hasFainted = true;
     } else {
       console.log(`\t${opponent.name} has ${opponent.hp}HP left...`);
     }
@@ -225,6 +236,7 @@ class Pokemon {
     console.log(`%c\t${this.name} is using potion +10 HP...`, "color: #f8f87c");
     this.hp += heal;
     console.log(`\t${this.name} now has ${this.hp} HP...`);
+    // 40% chance to activate defense when healing
     if (Math.random() < 0.4) {
       console.log(
         `%c\t${this.name} has activated DEFENSE!!`,
@@ -240,22 +252,28 @@ class FirePokemon extends Pokemon {
     super(name, "Fire", level, hp);
   }
   attack(opponent) {
-    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: red");
-    let attacks = ["Flaming tail whip", "Flamethrower", "Fire punch"];
-    let rand = Math.floor(Math.random() * attacks.length);
-    console.log(
-      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
-      "color: red"
-    );
-    let damage = this.level * 5;
+    //prevent attacking when dead
+    if (opponent.hasFainted === true) {
+      return;
+    } else {
+      console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: red");
+      let attacks = ["Flaming tail whip", "Flamethrower", "Fire punch"];
+      let rand = Math.floor(Math.random() * attacks.length);
+      console.log(
+        `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+        "color: red"
+      );
+      let damage = this.level * 5;
 
-    this.calculateDamage(opponent, damage);
+      this.calculateDamage(opponent, damage);
+    }
   }
   heal() {
     const heal = 15;
     console.log(`%c\t${this.name} is using FLASH FIRE!!`, "color: #f8f87c");
     this.hp += heal;
     console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
+    // 40% chance to activate defense when healing
     if (Math.random() < 0.4) {
       console.log(
         `%c\t${this.name} has activated DEFENSE!!`,
@@ -271,27 +289,33 @@ class ElectricPokemon extends Pokemon {
     super(name, "Electric", level, hp);
   }
   attack(opponent) {
-    let attacks = [
-      "Electro Ball",
-      "Thunder Fang",
-      "Thunderbolt",
-      "Bolt Strike",
-    ];
-    let rand = Math.floor(Math.random() * attacks.length);
-    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: yellow");
-    console.log(
-      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
-      "color: yellow"
-    );
-    let damage = this.level * 5;
+    //prevent attacking when dead
+    if (opponent.hasFainted === true) {
+      return;
+    } else {
+      let attacks = [
+        "Electro Ball",
+        "Thunder Fang",
+        "Thunderbolt",
+        "Bolt Strike",
+      ];
+      let rand = Math.floor(Math.random() * attacks.length);
+      console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: yellow");
+      console.log(
+        `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+        "color: yellow"
+      );
+      let damage = this.level * 5;
 
-    this.calculateDamage(opponent, damage);
+      this.calculateDamage(opponent, damage);
+    }
   }
   heal() {
     const heal = 15;
     console.log(`%c\t${this.name} is using HEAL PULSE!!`, "color: #f8f87c");
     this.hp += heal;
     console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
+    // 40% chance to activate defense when healing
     if (Math.random() < 0.4) {
       console.log(
         `%c\t${this.name} has activated DEFENSE!!`,
@@ -307,22 +331,28 @@ class WaterPokemon extends Pokemon {
     super(name, "Water", level, hp);
   }
   attack(opponent) {
-    let attacks = ["Aqua Jet", "Hydro Pump", "Jet Punch", "Water Spout"];
-    let rand = Math.floor(Math.random() * attacks.length);
-    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: lightblue");
-    console.log(
-      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
-      "color: lightblue"
-    );
-    let damage = this.level * 5;
+    //prevent attacking when dead
+    if (opponent.hasFainted === true) {
+      return;
+    } else {
+      let attacks = ["Aqua Jet", "Hydro Pump", "Jet Punch", "Water Spout"];
+      let rand = Math.floor(Math.random() * attacks.length);
+      console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: lightblue");
+      console.log(
+        `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+        "color: lightblue"
+      );
+      let damage = this.level * 5;
 
-    this.calculateDamage(opponent, damage);
+      this.calculateDamage(opponent, damage);
+    }
   }
   heal() {
     const heal = 15;
     console.log(`%c\t${this.name} is using LIFE DEW!!`, "color: #f8f87c");
     this.hp += heal;
     console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
+    // 40% chance to activate defense when healing
     if (Math.random() < 0.4) {
       console.log(
         `%c\t${this.name} has activated DEFENSE!!`,
@@ -338,22 +368,28 @@ class GroundPokemon extends Pokemon {
     super(name, "Water", level, hp);
   }
   attack(opponent) {
-    let attacks = ["Earth Quake", "Mud Bomb", "Sandstorm", "Scorching Sand"];
-    let rand = Math.floor(Math.random() * attacks.length);
-    console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: #b5651d");
-    console.log(
-      `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
-      "color: #b5651d"
-    );
-    let damage = this.level * 5;
+    //prevent attacking when dead
+    if (opponent.hasFainted === true) {
+      return;
+    } else {
+      let attacks = ["Earth Quake", "Mud Bomb", "Sandstorm", "Scorching Sand"];
+      let rand = Math.floor(Math.random() * attacks.length);
+      console.log(`%c\n\t\t~~${this.name}'s attack~~`, "color: #b5651d");
+      console.log(
+        `%c\t${this.name} uses ${attacks[rand]} on ${opponent.name}!!`,
+        "color: #b5651d"
+      );
+      let damage = this.level * 5;
 
-    this.calculateDamage(opponent, damage);
+      this.calculateDamage(opponent, damage);
+    }
   }
   heal() {
     const heal = 15;
     console.log(`%c\t${this.name} is using SHORE UP!!`, "color: #f8f87c");
     this.hp += heal;
     console.log(`\t${this.name} now has ${this.hp} HP (+${heal})...`);
+    // 40% chance to activate DEFENSE mechanism
     if (Math.random() < 0.4) {
       console.log(
         `%c\t${this.name} has activated DEFENSE!!`,
