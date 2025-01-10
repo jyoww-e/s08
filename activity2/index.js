@@ -48,12 +48,12 @@ document.addEventListener("DOMContentLoaded", function () {
       isNaN(numOfTrainers) ||
       isNaN(numOfPokemons) ||
       numOfPokemons > 5 ||
-      numOfTrainers > 5 ||
       numOfPokemons < 1 ||
-      numOfTrainers < 3
+      numOfTrainers < 3 ||
+      numOfTrainers > 5
     ) {
       loopBool = true;
-      alert(
+      console.log(
         "Error: Please enter valid information !\nTrainer: 3 up to 5\nPokemons: 1 up to 5 per Trainer"
       );
     } else {
