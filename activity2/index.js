@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } // trainers loop end
 
   // Start Tournament
-  numOfTrainers = 3;
+  // numOfTrainers = 3;
   if (numOfTrainers == 3) {
     tournament.roundRobinBattle(tournament.trainers);
   } else {
