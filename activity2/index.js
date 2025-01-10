@@ -34,48 +34,57 @@ const pokemonList = [
 let numOfTrainers, numOfPokemons;
 
 document.addEventListener("DOMContentLoaded", function () {
-  //   while (true) {
-  //     numOfTrainers = Number(
-  //       prompt("Please enter number of Trainers(Maximum of 5): ")
-  //     );
-  //     numOfPokemons = Number(
-  //       prompt(`Enter number of Pokemons (5 MAX) per Trainer: `)
-  //     );
+  while (true) {
+    numOfTrainers = Number(
+      prompt("Please enter number of Trainers(Maximum of 5): ")
+    );
+    numOfPokemons = Number(
+      prompt(`Enter number of Pokemons (5 MAX) per Trainer: `)
+    );
 
-  //     // error handling
-  //     if (
-  //       isNaN(numOfTrainers) ||
-  //       isNaN(numOfPokemons) ||
-  //       numOfPokemons > 5 ||
-  //       numOfTrainers > 5
-  //     ) {
-  //       console.error(
-  //         "Error: Please enter whole numbers and maximum of 5 pokemons and trainers!"
-  //       );
-  //     } else {
-  //       break;
-  //     }
-  //   }
+    // error handling
+    if (
+      isNaN(numOfTrainers) ||
+      isNaN(numOfPokemons) ||
+      numOfPokemons > 5 ||
+      numOfTrainers > 5 ||
+      numOfPokemons < 1 ||
+      numOfTrainers < 3
+    ) {
+      console.error(
+        "Error: Please enter whole numbers and maximum of 5 pokemons and trainers!"
+      );
+    } else {
+      break;
+    }
+  }
+  //SET TRAINERS
+  for (let i = 0; i < numOfTrainers; i++) {
+    let trainerName = prompt(`Enter name of Trainer ${i + 1}: `);
 
-  //   for (let i = 0; i < numOfTrainers; i++) {
-  //     let trainerName = prompt(`Enter name of Trainer ${i + 1}: `);
+    // assign pokemons to trainers
+    let assignedPokemons = [];
+    for (let j = 0; j < numOfPokemons; j++) {
+      let poke = pokemonList.shift();
+      let pokemon = new Pokemon(poke.name, poke.type);
+      assignedPokemons.push(pokemon);
+    } //assign pokemon loop end
 
-  //     // assign pokemons to trainers
-  //     let assignedPokemons = [];
-  //     for (let j = 0; j < numOfPokemons; j++) {
-  //       let poke = pokemonList.shift();
-  //       let pokemon = new Pokemon(poke.name, poke.type);
-  //       assignedPokemons.push(pokemon);
-  //     } //assign pokemon loop end
-
-  //     // add trainers to tournament
-  //     tournament.trainers.push(new Trainer(trainerName, assignedPokemons));
-  //   } // trainers loop end
+    // add trainers to tournament
+    tournament.trainers.push(new Trainer(trainerName, assignedPokemons));
+  } // trainers loop end
 
   // Start Tournament
-  tournament.bracketBattles();
+  numOfTrainers = 3;
+  if (numOfTrainers == 3) {
+    tournament.roundRobinBattle(tournament.trainers);
+  } else {
+    // console.log("pumunta sa else");
 
-  tournament.restPeriod(tournament.bracketWinners);
+    tournament.bracketBattles();
 
-  tournament.roundRobinBattle(tournament.bracketWinners);
-});
+    tournament.restPeriod(tournament.bracketWinners);
+
+    tournament.roundRobinBattle(tournament.bracketWinners);
+  }
+}); //event end

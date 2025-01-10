@@ -1,45 +1,45 @@
 class Tournament {
   constructor() {
-    // this.trainers = [];
+    this.trainers = [];
 
     //TEST DATA
-    this.trainers = [
-      new Trainer("Ash", [
-        new Pokemon("Pikachu", "Electric"),
-        new Pokemon("Bulbasaur", "Grass"),
-        new Pokemon("Charmander", "Fire"),
-        new Pokemon("Squirtle", "Water"),
-        new Pokemon("Rattata", "Normal"),
-      ]),
-      new Trainer("Misty", [
-        new Pokemon("Poliwag", "Water"),
-        new Pokemon("Psyduck", "Water"),
-        new Pokemon("Krabby", "Water"),
-        new Pokemon("Politoed", "Water"),
-        new Pokemon("Exeggcute", "Psychic"),
-      ]),
-      new Trainer("Brock", [
-        new Pokemon("Geodude", "Ground"),
-        new Pokemon("Diglett", "Ground"),
-        new Pokemon("Sandshrew", "Ground"),
-        new Pokemon("Zubat", "Flying"),
-        new Pokemon("Koffing", "Poison"),
-      ]),
-      new Trainer("Gary", [
-        new Pokemon("Magnemite", "Steel"),
-        new Pokemon("Abra", "Psychic"),
-        new Pokemon("Vulpix", "Fire"),
-        new Pokemon("Caterpie", "Bug"),
-        new Pokemon("Pidgey", "Flying"),
-      ]),
-      new Trainer("Professor Oak", [
-        new Pokemon("Bulbasaur", "Grass"),
-        new Pokemon("Charmander", "Fire"),
-        new Pokemon("Squirtle", "Water"),
-        new Pokemon("Eevee", "Normal"),
-        new Pokemon("Jigglypuff", "Fairy"),
-      ]),
-    ];
+    // this.trainers = [
+    //   new Trainer("Ash", [
+    //     new Pokemon("Pikachu", "Electric"),
+    //     new Pokemon("Bulbasaur", "Grass"),
+    //     new Pokemon("Charmander", "Fire"),
+    //     new Pokemon("Squirtle", "Water"),
+    //     new Pokemon("Rattata", "Normal"),
+    //   ]),
+    //   new Trainer("Misty", [
+    //     new Pokemon("Poliwag", "Water"),
+    //     new Pokemon("Psyduck", "Water"),
+    //     new Pokemon("Krabby", "Water"),
+    //     new Pokemon("Politoed", "Water"),
+    //     new Pokemon("Exeggcute", "Psychic"),
+    //   ]),
+    //   new Trainer("Brock", [
+    //     new Pokemon("Geodude", "Ground"),
+    //     new Pokemon("Diglett", "Ground"),
+    //     new Pokemon("Sandshrew", "Ground"),
+    //     new Pokemon("Zubat", "Flying"),
+    //     new Pokemon("Koffing", "Poison"),
+    //   ]),
+    //   new Trainer("Gary", [
+    //     new Pokemon("Magnemite", "Steel"),
+    //     new Pokemon("Abra", "Psychic"),
+    //     new Pokemon("Vulpix", "Fire"),
+    //     new Pokemon("Caterpie", "Bug"),
+    //     new Pokemon("Pidgey", "Flying"),
+    //   ]),
+    //   new Trainer("Professor Oak", [
+    //     new Pokemon("Bulbasaur", "Grass"),
+    //     new Pokemon("Charmander", "Fire"),
+    //     new Pokemon("Squirtle", "Water"),
+    //     new Pokemon("Eevee", "Normal"),
+    //     new Pokemon("Jigglypuff", "Fairy"),
+    //   ]),
+    // ];
 
     this.pairings = [];
     this.bracketWinners = [];
@@ -193,8 +193,9 @@ class Tournament {
       champion = champion[0];
 
       console.log(
-        `%c${champion} is the champion`,
-        "color: yellow; font-size: 20px"
+        `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%c${champion} is the champion 🏆%c\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        "color: rgb(0, 0, 139); font-size: 30px; font-weight: bold; background-color: rgb(255, 255, 0); padding: 10px; border-radius: 5px;",
+        "color: none; font-size: 30px; font-weight: normal; background-color: none; padding: 0; border-radius: 0;"
       );
     } else {
       let champion = Object.keys(this.scores).find(
