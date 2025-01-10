@@ -98,6 +98,7 @@ class Tournament {
         let loser;
 
         if (trainerPair[0] && trainerPair[1]) {
+          // if pair is the same trainer
           if (trainerPair[0].name == trainerPair[1].name) {
             winner = trainerPair[0];
           } else {
@@ -138,9 +139,6 @@ class Tournament {
                 `%c${trainerPair[1].name} has chosen ${randomPokemon2.name}!`,
                 "color: white; background-color:rgb(9, 192, 192); padding: 2px; border-radius:4px"
               );
-
-              // trainerPair[0].pokemons.splice(rand1, 1);
-              // trainerPair[1].pokemons.splice(rand2, 1);
 
               this.battle = new Battle(randomPokemon1, randomPokemon2);
               winner = this.battle.doBattle(trainerPair);
@@ -207,9 +205,9 @@ class Pokemon {
     }
   }
   calculateDamage(opponent, damage) {
-    // WHEN DAMAGE IS CRITICAL MULTIPLY DAMAGE BY 2
+    // WHEN DAMAGE IS CRITICAL
     if (Math.random() < 0.3) {
-      damage *= 8;
+      damage *= 4;
       console.log(
         `\t%c${damage} ~CRITICAL~ `,
         "color: white; background-color: red; padding: 2px; border-radius: 4px"
@@ -435,49 +433,48 @@ class GroundPokemon extends Pokemon {
   }
 }
 
-const blastoise = new WaterPokemon("Blastoise", 10, 1000);
-const charmeleon = new FirePokemon("Charmeleon", 10, 1000);
-// const firefox = new FirePokemon("Firefox", 20, 2000);
-const battle1 = new Battle(blastoise, charmeleon);
+// const blastoise = new WaterPokemon("Blastoise", 10, 300);
+// const charmeleon = new FirePokemon("Charmeleon", 10, 300);
+// // const firefox = new FirePokemon("Firefox", 20, 2000);
+// const battle1 = new Battle(blastoise, charmeleon);
 
 // const winner = battl1111111
 
 const joe = new Trainer("Joe");
-joe.addPokemon(new FirePokemon("Charizard", 15, 1500));
-joe.addPokemon(new WaterPokemon("Blastoise", 15, 2000));
-joe.addPokemon(new GroundPokemon("Diglet", 5, 800));
-joe.addPokemon(new ElectricPokemon("ElectaBuzz", 20, 2000));
-joe.addPokemon(new ElectricPokemon("Zapdos", 30, 10000));
+joe.addPokemon(new FirePokemon("Charizard", 15, 300));
+joe.addPokemon(new WaterPokemon("Blastoise", 15, 300));
+joe.addPokemon(new GroundPokemon("Diglet", 5, 300));
+joe.addPokemon(new ElectricPokemon("ElectaBuzz", 20, 300));
+joe.addPokemon(new ElectricPokemon("Zapdos", 30, 800));
 
 const jun = new Trainer("Jun");
-jun.addPokemon(new FirePokemon("Charmeleon", 15, 1500));
-jun.addPokemon(new WaterPokemon("Wartortoise", 15, 2000));
-jun.addPokemon(new GroundPokemon("Dugtrio", 5, 800));
-jun.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
-jun.addPokemon(new GroundPokemon("Sudowoodo", 20, 2000));
+jun.addPokemon(new FirePokemon("Charmeleon", 15, 300));
+jun.addPokemon(new WaterPokemon("Wartortoise", 15, 300));
+jun.addPokemon(new GroundPokemon("Dugtrio", 5, 300));
+jun.addPokemon(new ElectricPokemon("Pikachu", 20, 300));
+jun.addPokemon(new GroundPokemon("Sudowoodo", 20, 300));
 
 const jed = new Trainer("Jed");
-jed.addPokemon(new FirePokemon("Blaziken", 15, 1500));
-jed.addPokemon(new WaterPokemon("Rotom", 15, 2000));
-jed.addPokemon(new GroundPokemon("Tyranitar", 5, 800));
-jed.addPokemon(new ElectricPokemon("Pikachu", 20, 2000));
-jed.addPokemon(new GroundPokemon("Groudon", 20, 2000));
+jed.addPokemon(new FirePokemon("Blaziken", 15, 300));
+jed.addPokemon(new WaterPokemon("Rotom", 15, 300));
+jed.addPokemon(new GroundPokemon("Tyranitar", 5, 300));
+jed.addPokemon(new ElectricPokemon("Pikachu", 20, 300));
+jed.addPokemon(new GroundPokemon("Groudon", 20, 300));
 
 const ken = new Trainer("Ken");
-ken.addPokemon(new FirePokemon("Arcanine", 15, 1500));
-ken.addPokemon(new WaterPokemon("Tentacool", 15, 2000));
-ken.addPokemon(new GroundPokemon("Marowak", 5, 800));
-ken.addPokemon(new ElectricPokemon("Jolteon", 20, 2000));
+ken.addPokemon(new FirePokemon("Arcanine", 15, 300));
+ken.addPokemon(new WaterPokemon("Tentacool", 15, 300));
+ken.addPokemon(new GroundPokemon("Marowak", 5, 300));
+ken.addPokemon(new ElectricPokemon("Jolteon", 20, 300));
 
 const jonas = new Trainer("Jonas");
-jonas.addPokemon(new FirePokemon("Typhlosion", 15, 1500));
-jonas.addPokemon(new WaterPokemon("Magikarp", 15, 2000));
-jonas.addPokemon(new GroundPokemon("Kabutops", 5, 800));
-jonas.addPokemon(new ElectricPokemon("Pachirisu", 20, 2000));
+jonas.addPokemon(new FirePokemon("Typhlosion", 15, 300));
+jonas.addPokemon(new WaterPokemon("Magikarp", 15, 300));
+jonas.addPokemon(new GroundPokemon("Kabutops", 5, 300));
+jonas.addPokemon(new ElectricPokemon("Pachirisu", 20, 300));
 
 // joeshua.viewPokedex();
 
-// number of tournament participants must be divisible by 2
 const tourna1 = new Tournament([joe, jun, jed, ken, jonas]);
 
 tourna1.startTournament();
