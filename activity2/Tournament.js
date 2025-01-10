@@ -87,14 +87,28 @@ class Tournament {
     this.bracket();
     let pairs = this.pairings;
 
+    // SHOW PARTICIPANTS
+    console.log(
+      "\t\t%cPARTICIPANTS",
+      "color: purple; font-size: 24px; font-weight: bold;"
+    );
+    pairs.forEach((pair, index) => {
+      pair[0] === pair[1]
+        ? console.log(
+            `%c${index + 1}. ${pair[0].name}`,
+            "color: purple;  font-weight: bold;"
+          )
+        : console.log(
+            `%c${index + 1}. ${pair[0].name} vs ${pair[1].name}`,
+            "color: purple;  font-weight: bold;"
+          );
+    });
     //REVERSE SO THAT THE ANNOUNCEMENT WILL LOG FIRST
     pairs.reverse();
 
     // LOOP THROUGH EACH PAIR
     pairs.forEach((pair, index) => {
       //CHECK FOR THE FREE PASS TRAINER
-
-      // console.log(pair);
       if (pair[0] === pair[1]) {
         console.log(
           `%c${pair[0].name} 🏆 ADVANCES TO THE NEXT ROUND AUTOMATICALLY! 🥳
@@ -107,7 +121,10 @@ class Tournament {
         // START BATTLE
 
         //ADD DESIGN FOR STARTING TOURNAMENT
-
+        console.log(
+          `%cMatch ${index}: ${pair[0].name} vs ${pair[1].name} ⚔️`,
+          "color: white; font-size: 18px; font-weight: bold; background-color: rgb(255, 99, 71); padding: 5px; border-radius: 5px;"
+        );
         const battle = new Battle(pair);
         const winner = battle.doBattle();
         this.bracketWinners.push(winner);
@@ -147,8 +164,6 @@ class Tournament {
     let max = Math.max(...Object.values(this.scores).map((e) => e.points));
 
     if (this.isThereATie(max)) {
-      // ADDITIONAL WINNING CONDITION
-
       //gets the name of the tied trainers
       let tiedTrainers = Object.keys(this.scores).filter(
         (key) => this.scores[key].points === max
@@ -162,15 +177,12 @@ class Tournament {
       );
 
       let totalHPs = {};
-
+      // get totalHP of trainers for ties
       tiedTrainers.forEach((trainer) => {
         totalHPs[trainer.name] = 0;
         trainer.pokemons.forEach((pokemon) => {
-          // console.log(pokemon.hp);
           totalHPs[trainer.name] += Number(pokemon.hp);
         });
-        // console.log("\n");
-        //
       });
 
       //gets the highest hp
@@ -190,8 +202,9 @@ class Tournament {
       );
 
       console.log(
-        `%c${champion} is the champion`,
-        "color: yellow; font-size: 20px"
+        `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%c${champion} is the champion 🏆%c\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        "color: rgb(0, 0, 139); font-size: 30px; font-weight: bold; background-color: rgb(255, 255, 0); padding: 10px; border-radius: 5px;",
+        "color: none; font-size: 30px; font-weight: normal; background-color: none; padding: 0; border-radius: 0;"
       );
     }
   }

@@ -106,7 +106,7 @@ class Pokemon {
         ],
         color: "darkviolet",
         background: "lavender",
-        icon: "🔮",
+        icon: "🧠",
       },
       Fighting: {
         attacks: [
@@ -164,7 +164,7 @@ class Pokemon {
       return;
     } else {
       console.log(
-        `\t%c[LVL: ${this.level} | DMG: ${this.baseDmg} | HP: ${this.hp}] %c${this.name}%c\'s attack`,
+        `\t%c[LVL: ${this.level} | DMG: ${this.baseDmg} | HP: ${this.hp}] %c${this.name}%c\'s attack (ง•̀.•́)ง`,
         `color: ${pokeTypes[this.type].color}; background-color: ${
           pokeTypes[this.type].background
         }; padding: 2px; border-radius: 4px 0px 0px 4px; font-weight: bold`,
@@ -197,25 +197,27 @@ class Pokemon {
     if (Math.random() < 0.25) {
       damage *= 2;
       console.log(
-        `\t%c${damage} ~CRITICAL~ `,
-        "color: white; background-color: red; padding: 2px; border-radius: 4px"
+        `\t%c${damage} CRITICAL DMG 💢`,
+        "color: white; background-color: red; padding: 2px; border-radius: 4px; font-weight: bold;"
       );
     }
     // WHEN DEFENSE IS ACTIVATED REDUCE DAMAGE TAKEN
     if (opponent.defense === true) {
-      damage -= (opponent.level + 1) * 2;
+      let reduce = (opponent.level + 1) * 2;
+      damage -= reduce;
       opponent.defense = false;
       console.log(
-        `\t%c${opponent.name} has BLOCKED (reduced damage)`,
-        "color: black; background-color: rgb(238, 238, 83); padding: 2px; border-radius: 4px"
+        `\t%c${opponent.name} BLOCKED ⚔️🛡️`,
+        "color: white; background-color: rgb(192, 192, 192); padding: 2px; border-radius: 4px"
       );
+      console.log(`\t-${reduce} DMG`);
     }
     //WHEN POKEMON DODGES DAMAGE IS REDUCED TO 0 (15% chance of dodging)
     if (Math.random() < 0.2) {
       damage = 0;
       console.log(
-        `\t%c${opponent.name} has DODGED!`,
-        "color: white; background-color: limegreen; padding: 2px; border-radius: 4px "
+        `\t%c${opponent.name} DODGED 🤸‍♀️`,
+        "background-color:rgb(173, 216, 230); color:rgb(0, 0, 139); padding: 2px; border-radius: 4px; font-weight: bold"
       );
     }
 
@@ -223,7 +225,7 @@ class Pokemon {
   }
   receivedDamage(opponent, damage) {
     opponent.hp -= damage;
-    console.log(`\t${opponent.name} takes -${damage}HP damage...`);
+    console.log(`\t${opponent.name} -${damage}HP `);
 
     //if opponent dies
     if (opponent.hp <= 0) {
@@ -232,19 +234,22 @@ class Pokemon {
       opponent.hasFainted = true;
       opponent.hp = 0;
     } else {
-      console.log(`\t${opponent.name} has ${opponent.hp}HP left...`);
+      console.log(`\t${opponent.name} HP: ${opponent.hp}`);
     }
   }
   heal() {
     const heal = 10;
-    console.log(`%c\t${this.name} is using potion +10 HP...`, "color: #f8f87c");
+    console.log(
+      `\t%c${this.name} uses heal ✨✨`,
+      "background-color:rgb(122, 216, 122); color:rgb(20, 102, 20); padding: 2px; border-radius: 4px"
+    );
     this.hp += heal;
-    console.log(`\t${this.name} now has ${this.hp} HP...`);
+    console.log(`\t+${heal} | ${this.name} HP: ${this.hp}`);
     // 40% chance to activate defense when healing
     if (Math.random() < 0.4) {
       console.log(
-        `\t%c${this.name} has activated DEFENSE!`,
-        "color: black; background-color: rgb(238, 238, 83); padding: 2px; border-radius: 4px"
+        `\t%c${this.name} activates DEFENSE 🛡️`,
+        "background-color:rgb(192, 192, 192); color:rgb(0, 0, 0); padding: 2px; border-radius: 4px"
       );
       this.defense = true;
     }
@@ -255,7 +260,8 @@ class Pokemon {
     this.level += 1;
 
     console.log(
-      `${this.name} levels up! LVL: ${this.level} DMG: ${this.baseDmg} HP: ${this.hp}`
+      `%c${this.name} levels up ⭐⭐! LVL: ${this.level} DMG: ${this.baseDmg} HP: ${this.hp}`,
+      "font-weight: bold; background-color: rgb(0, 191, 255); color: rgb(255, 255, 255); padding: 2px; border-radius: 4px;"
     );
   }
 }

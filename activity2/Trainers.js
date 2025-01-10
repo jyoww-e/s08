@@ -25,13 +25,19 @@ class Trainer {
       pokemon.hp = pokemon.initialHP;
       pokemon.hasFainted = false;
     });
-    console.log(`%c${this.name} is has rested his pokemons`);
+    console.log(
+      `%c${this.name} has rested his Pokemon 🛏️✨`,
+      "background-color: rgb(173, 216, 230); color: rgb(34, 139, 34);"
+    );
   }
 
   levelUp() {
     this.level += 1;
     this.revivePokemonCnt += 1;
-    console.log(`%c${this.name} levels up! +1 (+1 revive potion)`);
+    console.log(
+      `%c${this.name} levels up ⭐⭐! +1 ⚗️ (Revival Elixir)`,
+      "font-weight: bold; background-color: rgb(0, 167, 223); color: rgb(255, 255, 255); padding: 2px; border-radius: 4px;"
+    );
   }
 
   // console.log(pokemonList);
