@@ -3,7 +3,7 @@ class Pokemon {
     this.name = name;
     this.type = type;
     this.level = 1;
-    this.baseDmg = (this.level + 2) * 2;
+    this.baseDmg = (this.level + 3) * 2;
     this.initialHP = (this.level + 4) * 2;
     this.hp = this.initialHP;
     this.hasFainted = false;
@@ -229,7 +229,10 @@ class Pokemon {
 
     //if opponent dies
     if (opponent.hp <= 0) {
-      console.log(`\t${opponent.name} has fainted...`);
+      console.log(
+        `\t%c${opponent.name} has fainted... 💀`,
+        "color: white; font-style: italic; background-color: rgb(64, 64, 64); padding: 2px; border-radius: 4px;"
+      );
       this.levelUp();
       opponent.hasFainted = true;
       opponent.hp = 0;
