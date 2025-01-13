@@ -13,7 +13,7 @@ class Trainer {
       // console.log(deadPokemons);
       deadPokemons.forEach((pokemon) => {
         console.log(
-          `%c${this.name} is reviving ${pokemon.name}`,
+          `%c${this.name} is reviving ${pokemon.name} 💊`,
           "color: #1e90ff; background: #87ceeb; font-weight: bold; padding: 2px 4px; border-radius: 4px;"
         );
         pokemon.hp = pokemon.initialHP;
