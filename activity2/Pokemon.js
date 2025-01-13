@@ -256,7 +256,7 @@ class Pokemon {
   }
   levelUp() {
     this.initialHP *= 2;
-    this.baseDmg *= 2;
+    this.baseDmg += 10;
     this.level += 1;
 
     console.log(
