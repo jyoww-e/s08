@@ -61,77 +61,93 @@ class Tournament {
     // console.log(this.bracketWinners);
   }
 
-  bracketBattles() {
-    console.log(
-      "%c████████  ██████  ██    ██ ██████  ███    ██  █████  ███    ███ ███████ ███    ██ ████████ ",
-      "color:red"
-    );
-    console.log(
-      "%c   ██    ██    ██ ██    ██ ██   ██ ████   ██ ██   ██ ████  ████ ██      ████   ██    ██    ",
-      "color:red"
-    );
-    console.log(
-      "%c   ██    ██    ██ ██    ██ ██████  ██ ██  ██ ███████ ██ ████ ██ █████   ██ ██  ██    ██    ",
-      "color:red"
-    );
-    console.log(
-      "%c   ██    ██    ██ ██    ██ ██   ██ ██  ██ ██ ██   ██ ██  ██  ██ ██      ██  ██ ██    ██    ",
-      "color:red"
-    );
-    console.log(
-      "%c   ██     ██████   ██████  ██   ██ ██   ████ ██   ██ ██      ██ ███████ ██   ████    ██    ",
-      "color:red"
-    );
+  bracketBattles(participants = null) {
+    // WHEN PARTICIPANTS IS NOT NULL MEANS THERE ARE 4 PARTICIPANTS
+    if (participants == null) {
+      console.log(
+        "%c████████  ██████  ██    ██ ██████  ███    ██  █████  ███    ███ ███████ ███    ██ ████████ ",
+        "color:red"
+      );
+      console.log(
+        "%c   ██    ██    ██ ██    ██ ██   ██ ████   ██ ██   ██ ████  ████ ██      ████   ██    ██    ",
+        "color:red"
+      );
+      console.log(
+        "%c   ██    ██    ██ ██    ██ ██████  ██ ██  ██ ███████ ██ ████ ██ █████   ██ ██  ██    ██    ",
+        "color:red"
+      );
+      console.log(
+        "%c   ██    ██    ██ ██    ██ ██   ██ ██  ██ ██ ██   ██ ██  ██  ██ ██      ██  ██ ██    ██    ",
+        "color:red"
+      );
+      console.log(
+        "%c   ██     ██████   ██████  ██   ██ ██   ████ ██   ██ ██      ██ ███████ ██   ████    ██    ",
+        "color:red"
+      );
 
-    // BRACKET PAIRINGS
-    this.bracket();
-    let pairs = this.pairings;
+      // BRACKET PAIRINGS
+      this.bracket();
+      let pairs = this.pairings;
 
-    // SHOW PARTICIPANTS
-    console.log(
-      "\t\t%cPARTICIPANTS",
-      "color: purple; font-size: 24px; font-weight: bold;"
-    );
-    pairs.forEach((pair, index) => {
-      pair[0] === pair[1]
-        ? console.log(
-            `%c${index + 1}. ${pair[0].name}`,
-            "color: purple;  font-weight: bold;"
-          )
-        : console.log(
-            `%c${index + 1}. ${pair[0].name} vs ${pair[1].name}`,
-            "color: purple;  font-weight: bold;"
+      // SHOW PARTICIPANTS
+      console.log(
+        "\t\t%cPARTICIPANTS",
+        "color: purple; font-size: 24px; font-weight: bold;"
+      );
+      pairs.forEach((pair, index) => {
+        pair[0] === pair[1]
+          ? console.log(
+              `%c${index + 1}. ${pair[0].name}`,
+              "color: purple;  font-weight: bold;"
+            )
+          : console.log(
+              `%c${index + 1}. ${pair[0].name} vs ${pair[1].name}`,
+              "color: purple;  font-weight: bold;"
+            );
+      });
+      //REVERSE SO THAT THE ANNOUNCEMENT WILL LOG FIRST
+      pairs.reverse();
+
+      // LOOP THROUGH EACH PAIR
+      pairs.forEach((pair, index) => {
+        //CHECK FOR THE FREE PASS TRAINER
+        if (pair[0] === pair[1]) {
+          console.log(
+            `%c${pair[0].name} 🏆 ADVANCES TO THE NEXT ROUND AUTOMATICALLY! 🥳
+            %cNo match needed—${pair[0].name} secures his spot in the next stage of the tournament!`,
+            "color: lime; font-size: 16px; font-weight: bold",
+            "color: lime; font-style: italic; font-size: 16px; font-weight: bold"
           );
-    });
-    //REVERSE SO THAT THE ANNOUNCEMENT WILL LOG FIRST
-    pairs.reverse();
+          this.bracketWinners.push(pair[0]);
+        } else {
+          // START BATTLE
 
-    // LOOP THROUGH EACH PAIR
-    pairs.forEach((pair, index) => {
-      //CHECK FOR THE FREE PASS TRAINER
-      if (pair[0] === pair[1]) {
-        console.log(
-          `%c${pair[0].name} 🏆 ADVANCES TO THE NEXT ROUND AUTOMATICALLY! 🥳
-          %cNo match needed—${pair[0].name} secures his spot in the next stage of the tournament!`,
-          "color: lime; font-size: 16px; font-weight: bold",
-          "color: lime; font-style: italic; font-size: 16px; font-weight: bold"
-        );
-        this.bracketWinners.push(pair[0]);
-      } else {
-        // START BATTLE
-
-        //ADD DESIGN FOR STARTING TOURNAMENT
-        console.log(
-          `%cMatch ${index}: ${pair[0].name} vs ${pair[1].name} ⚔️`,
-          "color: white; font-size: 18px; font-weight: bold; background-color: rgb(255, 99, 71); padding: 5px; border-radius: 5px;"
-        );
-        const battle = new Battle(pair);
-        const winner = battle.doBattle();
-        this.bracketWinners.push(winner);
-      }
-    }); //end for each
-
-    // console.log(this.bracketWinners);
+          //ADD DESIGN FOR STARTING TOURNAMENT
+          console.log(
+            `%cMatch ${index}: ${pair[0].name} vs ${pair[1].name} ⚔️`,
+            "color: white; font-size: 18px; font-weight: bold; background-color: rgb(255, 99, 71); padding: 5px; border-radius: 5px;"
+          );
+          const battle = new Battle(pair);
+          const winner = battle.doBattle();
+          this.bracketWinners.push(winner);
+        }
+      }); //end for each
+    } else {
+      // START BATTLE
+      //ADD DESIGN FOR STARTING TOURNAMENT
+      console.log(
+        `%cMatch: ${participants[0].name} vs ${participants[1].name} ⚔️`,
+        "color: white; font-size: 18px; font-weight: bold; background-color: rgb(255, 99, 71); padding: 5px; border-radius: 5px;"
+      );
+      const battle = new Battle(participants);
+      const winner = battle.doBattle();
+      // ANNOUNCE WINNER
+      console.log(
+        `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%c${winner.name} is the champion 🏆%c\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+        "color: rgb(0, 0, 139); font-size: 30px; font-weight: bold; background-color: rgb(255, 255, 0); padding: 10px; border-radius: 5px;",
+        "color: none; font-size: 30px; font-weight: normal; background-color: none; padding: 0; border-radius: 0;"
+      );
+    }
   }
 
   roundRobinBattle(trainers) {
@@ -210,6 +226,7 @@ class Tournament {
     }
   }
 
+  //check for tied scores
   isThereATie(max) {
     let countOfHighest = 0;
     for (let e in this.scores) {
@@ -221,6 +238,7 @@ class Tournament {
     return countOfHighest > 1 ? true : false;
   }
 
+  // sets the bracket matches
   bracket() {
     let arrLen = this.trainers.length;
 

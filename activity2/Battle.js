@@ -68,14 +68,14 @@ class Battle {
       trainer1.levelUp();
       console.log(
         `%c${trainer1.name} wins the match and advances to the next round 🎉🥳👏`,
-        "font-size: 15px; font-weight: bold; background-color: rgb(255, 215, 0); color: rgb(0, 0, 0); border-radius: 4px; padding: 4px"
+        "font-size: 12px; font-weight: bold; background-color: rgb(255, 215, 0); color: rgb(0, 0, 0); border-radius: 4px; padding: 4px"
       );
       return trainer1;
     } else {
       trainer2.levelUp();
       console.log(
         `%c${trainer2.name} wins the match and advances to the next round 🎉🥳👏`,
-        "font-size: 15px; font-weight: bold; background-color: rgb(255, 215, 0); color: rgb(0, 0, 0); border-radius: 4px; padding: 4px"
+        "font-size: 12px; font-weight: bold; background-color: rgb(255, 215, 0); color: rgb(0, 0, 0); border-radius: 4px; padding: 4px"
       );
       return trainer2;
     }

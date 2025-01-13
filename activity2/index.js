@@ -31,34 +31,44 @@ const pokemonList = [
   { name: "Eevee", type: "Normal" },
 ];
 
-let numOfTrainers, numOfPokemons;
-
 document.addEventListener("DOMContentLoaded", function () {
   let loopBool = true;
+  let numOfTrainers, numOfPokemons;
   while (loopBool) {
     numOfTrainers = Number(
       prompt("Please enter number of Trainers (Min: 3 | Max: 5): ")
     );
+
+    // error handling
+    if (isNaN(numOfTrainers)) {
+      loopBool = true;
+      alert("Error: Please enter valid information!\nMust be a number");
+      continue;
+    }
+
+    if (numOfTrainers < 3 || numOfTrainers > 5) {
+      loopBool = true;
+      alert("Trainer: 3 up to 5\nPokemons: 1 up to 5 per Trainer");
+      continue;
+    }
+
     numOfPokemons = Number(
       prompt(`Enter number of Pokemons (Min: 1 | Max: 5) per Trainer: `)
     );
-
     // error handling
-    if (
-      isNaN(numOfTrainers) ||
-      isNaN(numOfPokemons) ||
-      numOfPokemons > 5 ||
-      numOfPokemons < 1 ||
-      numOfTrainers < 3 ||
-      numOfTrainers > 5
-    ) {
+    if (isNaN(numOfPokemons)) {
       loopBool = true;
-      console.log(
-        "Error: Please enter valid information !\nTrainer: 3 up to 5\nPokemons: 1 up to 5 per Trainer"
-      );
-    } else {
-      loopBool = false;
+      alert("Error: Please enter valid information!\nMust be a number");
+      continue;
     }
+
+    if (numOfPokemons < 1 || numOfPokemons > 5) {
+      loopBool = true;
+      alert("Trainer: 3 up to 5\nPokemons: 1 up to 5 per Trainer");
+      continue;
+    }
+
+    loopBool = false;
   }
   //SET TRAINERS
   for (let i = 0; i < numOfTrainers; i++) {
@@ -77,12 +87,14 @@ document.addEventListener("DOMContentLoaded", function () {
   } // trainers loop end
 
   // Start Tournament
-  // numOfTrainers = 3;
+
+  // numOfTrainers = 3; directly go to round robin
   if (numOfTrainers == 3) {
     tournament.roundRobinBattle(tournament.trainers);
+  } else if (numOfTrainers == 4) {
+    tournament.bracketBattles();
+    tournament.bracketBattles(tournament.bracketWinners);
   } else {
-    // console.log("pumunta sa else");
-
     tournament.bracketBattles();
 
     tournament.restPeriod(tournament.bracketWinners);
