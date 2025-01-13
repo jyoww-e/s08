@@ -4,7 +4,7 @@ class Pokemon {
     this.type = type;
     this.level = 1;
     this.baseDmg = (this.level + 2) * 2;
-    this.initialHP = (this.level + 6) * 2;
+    this.initialHP = (this.level + 4) * 2;
     this.hp = this.initialHP;
     this.hasFainted = false;
   }

@@ -12,7 +12,10 @@ class Trainer {
       let deadPokemons = this.pokemons.filter((e) => e.hp <= 0);
       // console.log(deadPokemons);
       deadPokemons.forEach((pokemon) => {
-        console.log(`%c${this.name} is reviving ${pokemon.name}`);
+        console.log(
+          `%c${this.name} is reviving ${pokemon.name}`,
+          "color: #1e90ff; background: #87ceeb; font-weight: bold; padding: 2px 4px; border-radius: 4px;"
+        );
         pokemon.hp = pokemon.initialHP;
         pokemon.hasFainted = false;
       });
