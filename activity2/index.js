@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tournament.roundRobinBattle(tournament.trainers);
   } else if (numOfTrainers == 4) {
     tournament.bracketBattles();
+    tournament.restPeriod(tournament.bracketWinners);
     tournament.bracketBattles(tournament.bracketWinners);
   } else {
     tournament.bracketBattles();
