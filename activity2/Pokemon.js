@@ -175,10 +175,10 @@ class Pokemon {
           pokeTypes[this.type].background
         }; padding: 2px; border-radius: 0px 4px 4px 0px; font-weight: bold; font-variant:none; font-style: normal; text-transform: lowercase;`
       );
+
+      //chooses attack name based on level
       let attackName = pokeTypes[this.type].attacks[this.level - 1];
-      // background-color: ${
-      //   pokeTypes[this.type].background
-      // };
+
       console.log(
         `\t%c${this.name} uses ${attackName} on ${opponent.name} ${
           pokeTypes[this.type].icon
